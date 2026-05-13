@@ -51,10 +51,7 @@ if __name__ == "__main__":
                 model = model.to("cuda")
                 images, labels = images.to("cuda"), labels.to("cuda")
                 
-            if torch.cuda.device_count() > 1:
-                print(print(f"Sử dụng {torch.cuda.device_count()} GPUs!"))
-                model = torch.nn.DataParallel(model) # Ép dùng cả 2 card T4
-                model.to('cuda')
+
 
             predict = model(images)
             print(predict)
