@@ -11,7 +11,7 @@ if __name__ == "__main__":
     logging.basicConfig(level=logging.INFO, format='%(levelname)s: %(message)s')
 
     # DataLoader
-    train_data = Animaldataset(root="/Users/tavantai/Developer/PycharmProjects/vietnguyencourse/BasicDeepLearning/animals", train=True, transform=transformer)
+    train_data = Animaldataset(root="/kaggle/working/resnet_animal/animals", train=True, transform=transformer)
     train_loader = DataLoader(
         train_data,
         batch_size=128,
@@ -20,7 +20,7 @@ if __name__ == "__main__":
         drop_last=True
     )
 
-    test_data = Animaldataset(root="/Users/tavantai/Developer/PycharmProjects/vietnguyencourse/BasicDeepLearning/animals", train=True, transform=transformer)
+    test_data = Animaldataset(root="/kaggle/working/resnet_animal/animals", train=False, transform=transformer)
     test_loader = DataLoader(
         test_data,
         batch_size=128,
