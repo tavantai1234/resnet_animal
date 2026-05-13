@@ -16,7 +16,7 @@ if __name__ == "__main__":
         train_data,
         batch_size=128,
         shuffle=True,
-        num_workers=2,
+        num_workers=4,
         drop_last=True
     )
 
@@ -25,8 +25,8 @@ if __name__ == "__main__":
         test_data,
         batch_size=128,
         shuffle=True,
-        num_workers=2
-        ,drop_last=False
+        num_workers=4,
+        drop_last=False
     )
 
     # Setup Hyperparameters
