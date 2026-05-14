@@ -1,30 +1,39 @@
-from animal import Animaldataset, transformer
+from animal import Animaldataset
 from resnet import ResnetCustom
 from torch.utils.data import DataLoader
 import torch
 import logging
 from argparse import ArgumentParser
+from torchvision.transforms import ToTensor, Compose, Resize
+
+
+
 
 def get_args():
     parser = ArgumentParser()
     parser.add_argument("--epochs", type=int, default=10, help="Number of epochs for training")
     parser.add_argument("--batch_size", type=int, default=128, help="Batch size for training")
+    parser.add_argument("--image_size", type=float, default=224, help="Image size for resizing input images")
+    parser.add_argument("--root", type=float, default="/kaggle/working/resnet_animal/animals", help="URL of the dataset root directory")
     args = parser.parse_args()
     return args
 
 
 
 if __name__ == "__main__":
-
+    
     args = get_args()
     print(args.epochs)
     print(args.batch_size)
-
+    transformer = Compose([
+        ToTensor(),
+        Resize((args.image_size, args.image_size))
+    ])
 
 
     logging.basicConfig(level=logging.INFO, format='%(levelname)s: %(message)s')
     # DataLoader
-    train_data = Animaldataset(root="/kaggle/working/resnet_animal/animals", train=True, transform=transformer)
+    train_data = Animaldataset(root=args.root, train=True, transform=transformer)
     train_loader = DataLoader(
         train_data,
         batch_size=128,
@@ -33,7 +42,7 @@ if __name__ == "__main__":
         drop_last=True
     )
 
-    test_data = Animaldataset(root="/kaggle/working/resnet_animal/animals", train=False, transform=transformer)
+    test_data = Animaldataset(root=args.root, train=False, transform=transformer)
     test_loader = DataLoader(
         test_data,
         batch_size=128,
