@@ -46,7 +46,7 @@ class Animaldataset(Dataset):
 
 if __name__ == "__main__":
 
-    train_dataset = Animaldataset(root="/kaggle/working/resnet_animal/animals", train=True, transform=transformer)
+    train_dataset = Animaldataset(root="/Users/tavantai/Developer/PycharmProjects/vietnguyencourse/kaggletest/animals", train=True, transform=transformer)
     # image, label = train_dataset.__getitem__(8028)
     # transform = transforms.ToTensor()
     # image = transform(image)
