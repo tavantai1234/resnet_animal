@@ -17,6 +17,7 @@ def get_args():
     parser.add_argument("--batch_size", type=int, default=128, help="Batch size for training")
     parser.add_argument("--image_size", type=float, default=224, help="Image size for resizing input images")
     parser.add_argument("--root", type=str, default="/kaggle/working/resnet_animal/animals", help="URL of the dataset root directory")
+    parser.add_argument("--logging", type=str, default="tensorboard")
     args = parser.parse_args()
     return args
 
@@ -31,7 +32,7 @@ if __name__ == "__main__":
         ToTensor(),
         Resize((args.image_size, args.image_size))
     ])
-    writer = SummaryWriter()
+    writer = SummaryWriter(args.logging)
 
 
     logging.basicConfig(level=logging.INFO, format='%(levelname)s: %(message)s')
