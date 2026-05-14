@@ -26,8 +26,7 @@ def get_args():
 if __name__ == "__main__":
     
     args = get_args()
-    print(args.epochs)
-    print(args.batch_size)
+
     transformer = Compose([
         ToTensor(),
         Resize((args.image_size, args.image_size))
@@ -40,7 +39,7 @@ if __name__ == "__main__":
     train_data = Animaldataset(root=args.root, train=True, transform=transformer)
     train_loader = DataLoader(
         train_data,
-        batch_size=128,
+        batch_size=args.batch_size,
         shuffle=True,
         num_workers=4,
         drop_last=True
@@ -49,7 +48,7 @@ if __name__ == "__main__":
     test_data = Animaldataset(root=args.root, train=False, transform=transformer)
     test_loader = DataLoader(
         test_data,
-        batch_size=128,
+        batch_size=args.batch_size,
         shuffle=True,
         num_workers=4,
         drop_last=False
