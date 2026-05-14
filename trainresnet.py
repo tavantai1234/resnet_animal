@@ -52,7 +52,7 @@ if __name__ == "__main__":
     )
 
     # Setup Hyperparameters
-    epochs = 10
+    epochs = args.epochs
     model = ResnetCustom()
     cen_loss = torch.nn.CrossEntropyLoss()
     optimizer = torch.optim.SGD(model.parameters(), lr=0.001, momentum=0.9)
