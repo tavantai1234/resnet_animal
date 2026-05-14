@@ -5,7 +5,7 @@ import torch
 import logging
 from argparse import ArgumentParser
 from torchvision.transforms import ToTensor, Compose, Resize
-
+from tqdm.autonotebook import tqdm
 
 
 
@@ -65,7 +65,8 @@ if __name__ == "__main__":
     # Training
     for epoch in range(epochs):
         model.train()
-        for i, (images, labels) in enumerate(train_loader):
+        progress_bar = tqdm(train_loader)
+        for i, (images, labels) in enumerate(progress_bar):
             if torch.backends.mps.is_available():
                 model = model.to("mps")
                 images, labels = images.to("mps"), labels.to("mps")
@@ -73,14 +74,10 @@ if __name__ == "__main__":
                 model = model.to("cuda")
                 images, labels = images.to("cuda"), labels.to("cuda")
                 
-
-
             predict = model(images)
-            print(predict)
-            print(labels.shape)
-            print(type(predict))
             loss = cen_loss(predict, labels)
-            print("Epoch {}/{}, Iteration {}/{}, Loss: {}".format(epoch + 1, epochs, i+1, len(train_loader), loss.item()))
+            progress_bar.set_description("Epoch {}/{}, Iteration {}/{}, Loss: {}".format(epoch + 1, epochs, i+1, len(train_loader), loss.item()))
+
             optimizer.zero_grad()
             loss.backward()
             optimizer.step()
