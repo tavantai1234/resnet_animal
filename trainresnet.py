@@ -1,11 +1,13 @@
 from animal import Animaldataset
 from resnet import ResnetCustom
 from torch.utils.data import DataLoader
+from torch.utils.tensorboard import SummaryWriter
 import torch
 import logging
 from argparse import ArgumentParser
 from torchvision.transforms import ToTensor, Compose, Resize
 from tqdm.autonotebook import tqdm
+
 
 
 
@@ -29,6 +31,7 @@ if __name__ == "__main__":
         ToTensor(),
         Resize((args.image_size, args.image_size))
     ])
+    writer = SummaryWriter()
 
 
     logging.basicConfig(level=logging.INFO, format='%(levelname)s: %(message)s')
@@ -76,6 +79,7 @@ if __name__ == "__main__":
                 
             predict = model(images)
             loss = cen_loss(predict, labels)
+            writer.add_scalar("Loss/train", loss.item(), epoch)
             progress_bar.set_description("Epoch {}/{}, Iteration {}/{}, Loss: {}".format(epoch + 1, epochs, i+1, len(train_loader), loss.item()))
 
             optimizer.zero_grad()
