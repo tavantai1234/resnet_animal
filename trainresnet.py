@@ -14,7 +14,7 @@ def get_args():
     parser.add_argument("--epochs", type=int, default=10, help="Number of epochs for training")
     parser.add_argument("--batch_size", type=int, default=128, help="Batch size for training")
     parser.add_argument("--image_size", type=float, default=224, help="Image size for resizing input images")
-    parser.add_argument("--root", type=float, default="/kaggle/working/resnet_animal/animals", help="URL of the dataset root directory")
+    parser.add_argument("--root", type=str, default="/kaggle/working/resnet_animal/animals", help="URL of the dataset root directory")
     args = parser.parse_args()
     return args
 
