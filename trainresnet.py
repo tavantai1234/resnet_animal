@@ -3,13 +3,26 @@ from resnet import ResnetCustom
 from torch.utils.data import DataLoader
 import torch
 import logging
+from argparse import ArgumentParser
+
+def get_args():
+    parser = ArgumentParser()
+    parser.add_argument("--epochs", type=int, default=10, help="Number of epochs for training")
+    parser.add_argument("--batch_size", type=int, default=128, help="Batch size for training")
+    args = parser.parse_args()
+    return args
 
 
 
 if __name__ == "__main__":
 
-    logging.basicConfig(level=logging.INFO, format='%(levelname)s: %(message)s')
+    args = get_args()
+    print(args.epochs)
+    print(args.batch_size)
 
+
+
+    logging.basicConfig(level=logging.INFO, format='%(levelname)s: %(message)s')
     # DataLoader
     train_data = Animaldataset(root="/kaggle/working/resnet_animal/animals", train=True, transform=transformer)
     train_loader = DataLoader(
