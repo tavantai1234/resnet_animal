@@ -65,7 +65,7 @@ if __name__ == "__main__":
     # Training
     for epoch in range(epochs):
         model.train()
-        progress_bar = tqdm(train_loader)
+        progress_bar = tqdm(train_loader, colour="cyan")
         for i, (images, labels) in enumerate(progress_bar):
             if torch.backends.mps.is_available():
                 model = model.to("mps")
