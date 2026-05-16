@@ -1,5 +1,5 @@
 from animal import Animaldataset
-from resnet import ResnetCustom
+from simplemodel import SimpleCNN
 from torch.utils.data import DataLoader
 import torch
 import logging
@@ -87,7 +87,7 @@ if __name__ == "__main__":
 
     # Setup Hyperparameters
     epochs = args.epochs
-    model = ResnetCustom()
+    model = SimpleCNN()
     cen_loss = torch.nn.CrossEntropyLoss()
     optimizer = torch.optim.SGD(model.parameters(), lr=0.001, momentum=0.9)
    
