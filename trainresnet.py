@@ -20,6 +20,7 @@ def get_args():
     parser.add_argument("--root", "-r", type=str, default="/kaggle/working/resnet_animal/animals", help="URL of the dataset root directory")
     parser.add_argument("--logging", "-l", type=str, default="tensorboard")
     parser.add_argument("--title", "-t",  type=str, default="trained_model", help="Title for the saved model")
+    parser.add_argument("--checkpoint", "-c", type=str, default=None)
     args = parser.parse_args()
     return args
 
@@ -74,6 +75,16 @@ if __name__ == "__main__":
         drop_last=False
     )
 
+    # Load checkpoint if provided
+    if args.checkpoint:
+        checkpoint = torch.load(args.checkpoint)
+        start_epoch = checkpoint["epoch"]
+        model = checkpoint["model_state_dict"]
+        optimizer = checkpoint["optimizer_state_dict"]
+    else:
+        start_epoch = 0
+
+
     # Setup Hyperparameters
     epochs = args.epochs
     model = ResnetCustom()
@@ -86,7 +97,7 @@ if __name__ == "__main__":
 
     best_acc = 0.0
     # Training
-    for epoch in range(epochs):
+    for epoch in range(start_epoch, epochs):
         model.train()
         progress_bar = tqdm(train_loader, colour="cyan")
         for i, (images, labels) in enumerate(progress_bar):
